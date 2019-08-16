@@ -54,4 +54,8 @@ export class UserService {
     const entity = await this.userRepository.delete(id);
     return entity;
   }
+
+  async findByName(name: string) {
+    return await this.userRepository.findOne({ name })
+  }
 }
