@@ -4,6 +4,8 @@ import { PostDto } from './post.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../../core/decorators/user.decorator';
 import { User as UserEntity } from '../user/user.entity';
+import { ListOptions } from '../../core/decorators/list-options.decorator';
+import { ListOptionsInterface } from '../../core/interfaces/list-options.interface';
 
 
 
@@ -21,8 +23,11 @@ export class PostController {
 
   @Get()
   @UseInterceptors(ClassSerializerInterceptor)
-  async index() {
-    return await this.postService.index();
+  async index(
+    // @Query('categories') categories: string
+    @ListOptions() options: ListOptionsInterface
+  ) {
+    return await this.postService.index(options);
   }
 
   @Get(':id')
