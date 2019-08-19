@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Post } from "../post/post.entity";
-@Entity()
+@Entity() 
 export class User{
   @PrimaryGeneratedColumn()
   id: number;
