@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, UseInterceptors, ClassSerializerInterceptor, Put, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseInterceptors, ClassSerializerInterceptor, Put, Delete, ParseIntPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto, UpdatePasswordDto } from './user.dto';
 
@@ -30,5 +30,11 @@ export class UserController {
   @Delete(':id')
   async destroy(@Param('id') id: string){
     return await this.userService.destroy(id);
+  }
+
+  @Get(':id/liked')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async liked(@Param('id',ParseIntPipe) id: number){
+    return await this.userService.liked(id) 
   }
 }

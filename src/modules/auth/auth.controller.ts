@@ -21,7 +21,7 @@ export class AuthController {
     console.log('user:', user);
     
     return {
-      message: '好的，验证吧',
+      message: '好的，验证通过',
 
     }
   }
