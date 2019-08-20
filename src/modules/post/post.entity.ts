@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, ManyToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 import { create } from "istanbul-reports";
 import { User } from "../user/user.entity";
 import { Category } from "../category/category.entity";
+import { Tag } from "../tag/tag.entity";
 
 @Entity()
 export class Post{
@@ -21,11 +22,15 @@ export class Post{
   updated: Date;
 
   @ManyToOne(type => User, user => user.posts)
-  user: User
+  user: User;
 
   @ManyToMany(type => User, user => user.voted)
   liked: User[];
 
   @ManyToOne(type => Category, category => category.posts)
   category: Category
+
+  @ManyToMany(type => Tag, tag => tag.posts)
+  @JoinTable()
+  tags: Tag[];
 }

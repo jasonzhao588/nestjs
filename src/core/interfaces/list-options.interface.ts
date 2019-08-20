@@ -1,3 +1,4 @@
 export interface ListOptionsInterface {
-  categories : string
+  categories : string;
+  tags: string
 }
