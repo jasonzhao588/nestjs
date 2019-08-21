@@ -43,7 +43,7 @@ export class CommentController {
     @Param('id', ParseIntPipe) id: number
   ){
     return await this.commentService.showPostComments(id);
-  }
+  } 
 
   @Get('users/:id/comments')
   async showUserComments(
