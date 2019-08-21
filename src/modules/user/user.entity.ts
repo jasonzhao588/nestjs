@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import { Post } from "../post/post.entity";
+import { Comment } from "../comment/comment.entity";
 @Entity() 
 export class User{
   @PrimaryGeneratedColumn()
@@ -10,7 +11,7 @@ export class User{
   @Column('varchar', { unique: true }) 
   name: string ;
 
-  @Column()
+  @Column({ select:false })
   @Exclude()
   password: string;
 
@@ -21,11 +22,14 @@ export class User{
   updated: Date;
 
   @OneToMany(type => Post, post => post.user)
-  posts: Post[]
+  posts: Post[];
 
   @ManyToMany(type => Post, post => post.liked)
   @JoinTable()
-  voted: Post[]
+  voted: Post[];
+
+  @OneToMany(type => Comment, comment => comment.user)
+  comments: Comment[];
 
   @BeforeInsert()
   @BeforeUpdate()
