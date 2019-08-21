@@ -53,7 +53,7 @@ export class PostService {
   }
 
   async index(options: ListOptionsInterface){
-    const { categories, tags } = options;
+    const { categories, tags, page, limit, order, sort } = options;
     const queryBuilder = await this.postRepository
       .createQueryBuilder('post');
 
@@ -68,13 +68,19 @@ export class PostService {
     if (tags) {
       queryBuilder.andWhere('tag.name IN (:...tags)', { tags });
     }
-    const entities = queryBuilder.getMany();
+
+    queryBuilder
+      .take(limit)
+      .skip(limit * ( page - 1 ));
+
+    queryBuilder
+      .orderBy({
+        [`post.${sort}`]: order
+      });
+
+    const entities = queryBuilder.getManyAndCount();
     return entities;
 
-    // const entities = await this.postRepository.find({
-    //   relations: ['user','category']
-    // });
-    // return entities
   }
 
   async show(id: string){
@@ -122,6 +128,5 @@ export class PostService {
       .relation(Post, 'liked')
       .of(id)
       .loadMany();
-
   }
 }
