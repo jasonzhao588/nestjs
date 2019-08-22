@@ -8,11 +8,10 @@ import { Possession } from '../enums/possession.enum';
 @Injectable()
 export class AccessGuard implements CanActivate {
   constructor(
-    private readonly reflector: Reflector,
-    private readonly userService: UserService
+    private readonly reflector: Reflector
+    // private readonly userService: UserService
   ) { }
 
-  //验证权限
   async validatePermissions(
     permissions: PermissionInterface[],
     user: User,
@@ -25,7 +24,7 @@ export class AccessGuard implements CanActivate {
       let hasPossession: boolean = true;
 
       if (possession === Possession.OWN) {
-        hasPossession = await this.userService.possess(user.id, resource, resourceId);
+        // hasPossession = await this.userService.possess(user.id, resource, resourceId);
       }
 
       if (role) {
@@ -51,9 +50,6 @@ export class AccessGuard implements CanActivate {
       request.user,
       parseInt(request.params.id)
     );
-    console.log('====================================');
-    console.log(request.user);
-    console.log('====================================');
     return results.includes(true); 
   }
 }

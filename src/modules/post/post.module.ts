@@ -6,7 +6,6 @@ import { Post } from './post.entity';
 import { PassportModule } from '@nestjs/passport';
 import { AuthModule } from '../auth/auth.module';
 import { Tag } from '../tag/tag.entity';
-import { UserService } from '../user/user.service';
 
 @Module({
   imports: [
@@ -15,6 +14,6 @@ import { UserService } from '../user/user.service';
     AuthModule
   ],
   controllers: [PostController],
-  providers: [PostService,UserService]
+  providers: [PostService]
 })
 export class PostModule {}

@@ -44,7 +44,6 @@ export class PostController {
 
   @Put(':id')
   @UseGuards(AuthGuard(), AccessGuard)
-  // @UseGuards(AuthGuard())
   @Permissions({ resource: Resource.POST, possession: Possession.OWN })
   async update(
     @Param('id') id:string, 
