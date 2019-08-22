@@ -8,12 +8,19 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CategoryModule } from './modules/category/category.module';
 import { TagModule } from './modules/tag/tag.module';
 import { CommentModule } from './modules/comment/comment.module';
+import { RoleModule } from './modules/role/role.module';
 
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(), 
-    PostModule, UserModule, AuthModule, CategoryModule, TagModule, CommentModule
+    PostModule, 
+    UserModule, 
+    AuthModule, 
+    CategoryModule, 
+    TagModule, 
+    CommentModule, 
+    RoleModule
   ],
   controllers: [AppController],
   providers: [AppService],

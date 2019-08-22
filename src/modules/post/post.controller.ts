@@ -7,6 +7,10 @@ import { User as UserEntity } from '../user/user.entity';
 import { ListOptions } from '../../core/decorators/list-options.decorator';
 import { ListOptionsInterface } from '../../core/interfaces/list-options.interface';
 import { TransformInterceptor } from '../../core/interceptors/transform.interceptor';
+import { AccessGuard } from '../../core/guards/access.guard';
+import { Permissions } from '../../core/decorators/permissions.decorator';
+import { Resource } from '../../core/enums/resource.enum';
+import { Possession } from '../../core/enums/possession.enum';
 
 
 
@@ -18,7 +22,10 @@ export class PostController {
 
   @Post()
   @UseGuards(AuthGuard())
-  async store(@Body() data: PostDto, @User() user:UserEntity){
+  async store(
+    @Body() data: PostDto, 
+    @User() user:UserEntity
+  ){
     return await this.postService.store(data,user);
   }
 
@@ -36,7 +43,13 @@ export class PostController {
   }
 
   @Put(':id')
-  async update(@Param('id') id:string, @Body() data: Partial<PostDto>){
+  @UseGuards(AuthGuard(), AccessGuard)
+  // @UseGuards(AuthGuard())
+  @Permissions({ resource: Resource.POST, possession: Possession.OWN })
+  async update(
+    @Param('id') id:string, 
+    @Body() data: Partial<PostDto>
+  ){
     return await this.postService.update(id,data);
   }
 

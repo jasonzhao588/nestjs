@@ -6,16 +6,15 @@ import { Post } from './post.entity';
 import { PassportModule } from '@nestjs/passport';
 import { AuthModule } from '../auth/auth.module';
 import { Tag } from '../tag/tag.entity';
+import { UserService } from '../user/user.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Post, Tag]),
-    PassportModule.register({
-      defaultStrategy: 'jwt'
-    }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     AuthModule
   ],
   controllers: [PostController],
-  providers: [PostService]
+  providers: [PostService,UserService]
 })
 export class PostModule {}
