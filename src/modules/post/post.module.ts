@@ -3,17 +3,18 @@ import { PostController } from './post.controller';
 import { PostService } from './post.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from './post.entity';
-import { PassportModule } from '@nestjs/passport';
 import { AuthModule } from '../auth/auth.module';
 import { Tag } from '../tag/tag.entity';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
+    AuthModule,
     TypeOrmModule.forFeature([Post, Tag]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-    AuthModule
+    UserModule
   ],
   controllers: [PostController],
-  providers: [PostService]
+  providers: [PostService],
+  exports: []
 })
 export class PostModule {}
